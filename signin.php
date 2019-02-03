@@ -7,7 +7,7 @@ try{
         $email = $_POST['email'];
         $pass = hash('whirlpool',$_POST['pass']);
         
-        $select = $con->prepare("SELECT * FROM users WHERE email='$email' and pass='$pass'");
+        $select = $con->prepare("SELECT * FROM users WHERE email='$email' and pass='$pass' and verified='1'");
         $select->setFetchMode(PDO::FETCH_ASSOC);
         $select->execute();
         $data=$select->fetch();

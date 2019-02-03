@@ -19,7 +19,7 @@
           pass VARCHAR(255) UNIQUE,
           code INT,
           reg_date TIMESTAMP NOT NULL,
-          isVerified INT(1) DEFAULT 0)"
+          verified INT(1) DEFAULT 0)"
   );
   /*$conn->exec("CREATE TABLE images (
           id INT PRIMARY KEY AUTO_INCREMENT,
