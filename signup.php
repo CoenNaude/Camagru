@@ -11,6 +11,7 @@
                  <div><input type="email" name="email" placeholder="Email address" required><br><br></div>
                  <div><input class="input" type="submit" name="signup" value="Sign Up"></div>
                  <div><a href="index.php">&nbsp;Back to Login</a></div>
+
     </body>
     </html>
 
