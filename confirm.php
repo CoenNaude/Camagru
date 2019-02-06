@@ -1,17 +1,12 @@
 <?php
-    include_once 'config/session.php';
-    include_once 'config/database.php';
-
-    if (isset($_GET['email'])){
-        $code = $_GET['code'];
-        $stmt = $db->prepare("SELECT * FROM users WHERE code=:code");
-        $stmt->bindParam(':code', $code);
+    session_start();
+    if (isset($_GET['email']) == 1){
+        $db = new PDO("mysql:host=localhost;dbname=camagru","root","123456");
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $email = $_GET['email'];
+        $stmt = $db->prepare("UPDATE users SET verified=1 WHERE  email=$email");
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($result['email'] == $_GET['email']){
-            $stmt = $conn->prepare('UPDATE users SET verified=1 WHERE code=:code');
-            $stmt->bindParam(':code', $_GET['code']);
-            $stmt->execute();
-        }
+        echo "Succesfully Activated";
     }
+    header ('Refresh: 2; URL=http://localhost:8085/awe/index.php');
 ?>
