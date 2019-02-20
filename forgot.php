@@ -14,8 +14,6 @@ if(isset($_POST['email']))
 	if($stmt->rowCount() != 1)
 	{
 		$id = $row['id'];
-        echo 'jirre';
-
 		$str= "
 			Hello , $email
 			<br /><br />
@@ -33,7 +31,7 @@ if(isset($_POST['email']))
 	}
 	else
 	{
-		echo 'Sorry! Email not found. zzz ';
+		echo 'Sorry! Email not found.';
 	}
 }
 ?>

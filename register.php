@@ -33,7 +33,7 @@ try{
             $str = "Your verification link is http://localhost:8085/awe/confirm.php?email=%27".$email."%27";
             mail($email, "CAMAGRU Confirmation", $str);
             echo "Link sent: Redirecting";
-            header('Refresh: 5; URL=http://localhost:8085/awe/index.php');
+            header('Refresh: 2; URL=http://localhost:8085/awe/index.php');
         }
     }
     catch(PDOException $e)
@@ -41,4 +41,7 @@ try{
     echo "error".$e->getMessage();
     }
     
+?>
+<?php
+    include 'footer.php';
 ?>

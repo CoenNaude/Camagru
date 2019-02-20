@@ -19,22 +19,24 @@
           pass VARCHAR(255) UNIQUE,
           code INT,
           reg_date TIMESTAMP NOT NULL,
+          receive_notification INT(1) DEFAULT 1,
           verified INT(1) DEFAULT 0)"
   );
-  /*$conn->exec("CREATE TABLE images (
+  $conn->exec("CREATE TABLE images (
           id INT PRIMARY KEY AUTO_INCREMENT,
+          username VARCHAR(255) NOT NULL,
           photo LONGTEXT NOT NULL,
-          pname VARCHAR(255) NOT NULL,
-          likes INT DEFAULT 0)"
+          title VARCHAR(255) NOT NULL,
+          likes INT(11) DEFAULT NULL,
+          stamp TIMESTAMP NOT NULL,
+          user_id INT(11) NOT NULL)"
   );
-  $conn->exec("CREATE TABLE IF NOT EXISTS password_reset (
-          `id` INT PRIMARY KEY AUTO_INCREMENT,
-          `email` INT(255) UNSIGNED NOT NULL,
-          `selector` CHAR(16) NOT NULL,
-          `token` VARCHAR(64) NOT NULL,
-          `expires` BIGINT(20) 
-  )"
-  );*/
+   $conn->exec("CREATE TABLE comments ( 
+          id INT PRIMARY KEY AUTO_INCREMENT, 
+          username VARCHAR(255) NOT NULL, 
+          image_id INT(11) DEFAULT NULL,
+          comment LONGTEXT NOT NULL )"
+  );
 
   header('Location: ../index.php');
 ?>
