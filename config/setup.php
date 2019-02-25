@@ -19,23 +19,21 @@
           pass VARCHAR(255) UNIQUE,
           code INT,
           reg_date TIMESTAMP NOT NULL,
-          receive_notification INT(1) DEFAULT 1,
           verified INT(1) DEFAULT 0)"
   );
   $conn->exec("CREATE TABLE images (
           id INT PRIMARY KEY AUTO_INCREMENT,
+          user_id INT(11) NULL,
           username VARCHAR(255) NOT NULL,
           photo LONGTEXT NOT NULL,
           title VARCHAR(255) NOT NULL,
           likes INT(11) DEFAULT NULL,
-          stamp TIMESTAMP NOT NULL,
-          user_id INT(11) NOT NULL)"
+          stamp TIMESTAMP NOT NULL"
   );
-   $conn->exec("CREATE TABLE comments ( 
-          id INT PRIMARY KEY AUTO_INCREMENT, 
-          username VARCHAR(255) NOT NULL, 
-          image_id INT(11) DEFAULT NULL,
-          comment LONGTEXT NOT NULL )"
+  $conn->exec("CREATE TABLE IF NOT EXISTS comments (
+          `id` INT PRIMARY KEY AUTO_INCREMENT,
+          `pic_id` INT(11) NULL,
+          `commnent` LONGTEXT NOT NULL)"
   );
 
   header('Location: ../index.php');

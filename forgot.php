@@ -1,7 +1,6 @@
 <?php
 
 	include_once 'config/database.php';
-echo $_POST['email'];
 if(isset($_POST['email']))
 {
 	$db = new PDO("mysql:host=localhost;dbname=camagru","root","123456");
@@ -10,7 +9,6 @@ if(isset($_POST['email']))
 	$stmt = $db->prepare("SELECT pass FROM users WHERE email=$email");
 	$row = $stmt->fetch(PDO::FETCH_ASSOC); 
 	$stmt->execute($row);
-    print_r($stmt->rowCount());
 	if($stmt->rowCount() != 1)
 	{
 		$id = $row['id'];

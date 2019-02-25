@@ -4,13 +4,12 @@
 
 session_start();
     if(empty($_SESSION['email'])){
-        $msg =  "you need to be signed in to view this";
+        $msg =  "Access Denied!!";
         echo "<script LANGUAGE='JavaScript'>
         window.alert('$msg');
         window.location.href='login.php'; </script>";
     }
 
-   print_r($_SESSION);
 
     $id=$_SESSION['id'];
     if(isset($_POST['update'])){
@@ -18,7 +17,6 @@ session_start();
         $newemail=$_POST['email'];
         $password=$_POST['pass'];
         $cpassword=$_POST['cpass'];
-        $sub=$_POST['sub'];
         $newemail=filter_var($newemail, FILTER_SANITIZE_EMAIL);
         if (!filter_var($newemail, FILTER_VALIDATE_EMAIL) === false) {
             $msg = "$newemail is a valid email address";
@@ -43,11 +41,11 @@ session_start();
         } else {
             // $id=$_SESSION['id'];
             $pass_hash = hash('whirlpool', $cpassword);
-            $stmt = $conn->prepare("UPDATE users SET email='$newemail', username='$newusername', pass='$pass_hash' , receive_notification = '$sub' WHERE id='$id'");
+            $stmt = $conn->prepare("UPDATE users SET email='$newemail', username='$newusername', pass='$pass_hash' WHERE id='$id'");
             $stmt->execute();
             session_destroy();
                 
-            $msg =  "awe";
+            $msg =  "Information Updated";
             echo "<script LANGUAGE='JavaScript'>
             window.alert('$msg');
             window.location.href='login.php';
@@ -56,25 +54,85 @@ session_start();
         }
     ?>
 
-        <form method="post" action="profile.php">
+<html>
+<name>Profile</name>
+<body>
+<ul>
+	<?php if(!isset($_SESSION['email'])): ?>
+		<li><a href="index.php">Home</a></li>
+		<li><a href="gallery.php">Gallery</a></li>
+		<li><a href="profile.php">Profile</a></li>
+		<li><a href="login.php">Login</a></li>
+		<div><h1>Camagru</h1></div>
+		<?php else: ?>  
+		<li><a href="index.php">Home</a></li>
+		<li><a href="gallery.php">Gallery</a></li>
+        <li><a href="webcam.php">Webcam</a></li>
+		<li><a href="logout.php">Logout</a></li> 
+		<div><h1>Camagru</h1></div> 
+		<?php endif ?>
+	</ul>
+    <h3>Edit Profile</h3>
+        <form method="post" action="editphoto.php">
              <h2 style="color: #fff;">Sign Up</h2>
                 <div><input type="text" name="username" placeholder="Username" required><br><br></div>
                 <div><input type="password" name="pass" placeholder="Password"><br><br></div>
                 <div><input type="password" name="cpass" placeholder="Confirm Password"><br><br></div>
                 <div><input type="email" name="email" placeholder="Email Address" required><br><br></div>
-                <div width = 100px><input type="text" name="sub" placeholder="Type 1 for subscribe and 0 to unsubscribe" required><br><br></div>
                 <div><input class="input" type="submit" name="update" value="Update"></div>
-                <div><a href="index.php">&nbsp;Back to Login</a></div>
         </form>
 
-        <div class="bottom">
-            <?php if(!isset($_SESSION['email'])): ?>
-            <P style="font-size: 14px">You are currently not signed in <a href="login.php">Log in</a> Not yet a member?" <a href="signup.php">Sign up</a> </P>
-            <?php else: ?>  
-            <p style="font-size: 14px">You are logged in as <?php if(isset($_SESSION['email'])) echo $_SESSION['email']; ?> <a href="logout.php">Logout</a> </p>
-            <?php endif ?>
-            <p>Copyright &copy; <a href="https://www.camagru.com">Camagru</a> <?php echo date('Y') ?>, All rights reserved.</p>
+        <div>
+            <form method="POST" action="editphoto.php" enctype="multipart/form-data">
+                <input type="hidden" name="size" value="1000000">
+                <div>
+                    <h3 style="color: white; font-family: Impact, Charcoal, sans-serif; font-size: 30px;">Upload Photo</h3>
+                    <input type="file" name="profile" required="" accept="*/image"><br><br>
+                </div>
+                <div>
+                    <button type="submit" name="save">Save</button>
+                </div>
+            </form>
+            <div><a href="index.php">&nbsp;Back to Login</a></div>
         </div>
+    <?php
+    $user_id=$_SESSION['id'];
 
+    $display = $conn->prepare("SELECT * FROM images WHERE `user_id`='$user_id' ORDER BY id DESC");
+    $display->setFetchMode(PDO::FETCH_ASSOC);
+    $display->execute();
+    $i = 0;
+    // $j=0;
+    while ($images = $display->fetch()) {
+        $id=$images['id'];
+        // $title=$images['title'];
+        $username=$images['username'];
+        $likes=$images['likes'];
+
+
+        if ($i % 3 == 0) {
+            ?> <tr> <?php 
+        } ?>
+        <div>
+        <form method="post" action="editphoto.php">
+            <div>
+                <div><?php echo "photo by: ".$username; ?></div>
+                <td><img src="<?php echo $images['photo']; ?>" alt="<?php $images['title'];?>" width='500' height='400'></td>
+            </div>
+            <div>
+                <input type="hidden" name="id" value="<?php echo $id;?>">
+                <input onclick="return confirm('delete?');" type="submit" name="delete" value="delete">
+                <div><?php echo $likes." likes";?><hr></div>
+            </div>
+
+            <?php
+        if($i % 3 == 0) {
+            ?></tr><?php
+        }
+    $i++; ?> 
+        </form> 
+        </div> <?php
+    }
+?>
     </body>
 </html>

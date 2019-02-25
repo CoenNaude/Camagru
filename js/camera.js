@@ -9,19 +9,14 @@ if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
 }
 
 var filters = new Array;
-filters[0] = "images/filters/12.png";
-filters[1] = "images/filters/crown.png";
-filters[2] = "images/filters/om.png";
-filters[3] = "images/filters/PokeBall.png";
-filters[4] = "images/filters/wunhunnit.png";
-filters[5] = "images/filters/leaf.png";
-filters[6] = "images/filters/dealwithit.png";
-filters[7] = "images/filters/jay.png";
-filters[8] = "images/filters/thug_life.png";
+filters[0] = "images/filters/alien.png";
+filters[1] = "images/filters/bnb.png";
+filters[2] = "images/filters/just_do_it.png";
+filters[3] = "images/filters/pa.png";
+filters[4] = "images/filters/sj.png";
 
 function add_effect(e)
 {
-  
     var img = new Image;
     img.crossOrigin = "Anonymous";
     img.src = filters[e];

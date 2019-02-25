@@ -16,18 +16,6 @@
     } else {
         header ("location: gallery.php");
     } 
-//post comment
-    if((isset($_POST['comment'])) && (!empty($_SESSION['username']))) {
-        $image_id=$_POST['id'];
-        $username = $_SESSION['username'];
-        $comment = $_POST['submit_comment'];
-        $test = $conn->prepare("insert into comments (image_id,username,comment) values('$image_id', '$username', '$comment' )");
-        $test->execute();
-        var_dump($_POST);
-        header ("location: gallery.php");
-    } else {
-        header ("location: gallery.php");
-    } 
 
 // delete photo
     if(isset($_POST['delete'])){
@@ -41,6 +29,62 @@
         $del->execute();
         header ("location: profile.php");
     }
+
+//post comment
+    if((isset($_POST['comment'])) && (!empty($_SESSION['username']))) {
+        $image_id=$_POST['id'];
+        $comment=$_POST['text'];
+        $username=$_SESSION['username'];
+        
+        $comm="INSERT INTO comments (username, image_id, comment)
+        VALUES ('$username', '$image_id', '$comment')";
+        $conn->exec($comm);
+            header ("location: gallery.php");
+    } else {
+        header ("location: gallery.php");
+    }
+
+    //upload from local dir
+    if(isset($_POST['save'])) {
+        $id=$_SESSION['id'];
+        $username = $_SESSION['username'];
+        $images = $_FILES['profile']['name'];
+        $tmp_dir = $_FILES['profile']['tmp_name'];
+        $imageSize = $_FILES['profile']['size'];
+            $upload_dir='uploads/';
+            $ext=strtolower(pathinfo($images,PATHINFO_EXTENSION));
+            $valid_extensions=array("jpeg", "jpg", "png", "gif", "pdf"); 
+            $up_image=rand(1000, 1000000).".".$ext; 
+            $likes=0;
+            $title="PIC_".date("Y/m/d")."_".rand(1000, 1000000); 
+
+        move_uploaded_file($tmp_dir, $upload_dir.$up_image); 
+        $file = file_get_contents($upload_dir.$up_image,true );
+        $upload = "data:image;base64,".base64_encode($file);
+
+        $stmt=$conn->prepare("INSERT INTO images(username, photo, title, likes, user_id) 
+        VALUES (:username, :photo, :title, :likes, :user_id)");
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':photo', $upload);
+        $stmt->bindParam(':title', $title);
+        $stmt->bindParam(':likes', $likes);
+        $stmt->bindParam(':user_id', $id);
+        if ($stmt->execute()){
+            ?>
+                <script>
+                alert("Image was successfully uploaded");
+                window.location.href=('profile.php');
+                 </script>
+                 <?php echo "awe";
+        } else {
+            ?>
+            <script>
+                alert("Error");
+               window.location.href=('profile.php');
+            </script>
+            <?php
+        }
+ }
     ?>
 
 <!DOCTYPE html>
@@ -68,44 +112,3 @@
             <?php endif ?>
         </ul>
         <h1>Personal Gallery</h1>
-
-
-    <?php
-    $user_id=$_SESSION['id'];
-
-    $display = $conn->prepare("SELECT * FROM images WHERE user_id='$user_id' ORDER BY id DESC");
-    $display->setFetchMode(PDO::FETCH_ASSOC);
-    $display->execute();
-    $i = 0;
-    // $j=0;
-    while ($images = $display->fetch()) {
-        $id=$images['id'];
-        // $title=$images['title'];
-        $username=$images['username'];
-        $likes=$images['likes'];
-
-
-        if ($i % 3 == 0) {
-            ?> <tr> <?php 
-        } ?>
-        <div>
-        <form method="post" action="gallery.php">
-            <div>
-                <div><?php echo "photo by: ".$username; ?></div>
-                <td><img src="<?php echo $images['photo']; ?>" alt="<?php $images['title'];?>" width='500' height='400'></td>
-            </div>
-            <div>
-                <input type="hidden" name="id" value="<?php echo $id;?>">
-                <input type="submit" name="like" value="like" id="like">
-                <div><?php echo $likes." likes";?><hr></div>
-            </div>
-
-            <?php
-        if($i % 3 == 0) {
-            ?></tr><?php
-        }
-    $i++; ?> 
-        </form> 
-        </div> <?php
-    }
-?>
