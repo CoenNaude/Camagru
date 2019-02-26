@@ -55,22 +55,15 @@ session_start();
     ?>
 
 <html>
-<name>Profile</name>
-<body>
-<ul>
-	<?php if(!isset($_SESSION['email'])): ?>
-		<li><a href="index.php">Home</a></li>
-		<li><a href="gallery.php">Gallery</a></li>
-		<li><a href="profile.php">Profile</a></li>
-		<li><a href="login.php">Login</a></li>
+    <title>Profile</title>
+    <body>
+    <ul>
 		<div><h1>Camagru</h1></div>
-		<?php else: ?>  
 		<li><a href="index.php">Home</a></li>
 		<li><a href="gallery.php">Gallery</a></li>
         <li><a href="webcam.php">Webcam</a></li>
 		<li><a href="logout.php">Logout</a></li> 
 		<div><h1>Camagru</h1></div> 
-		<?php endif ?>
 	</ul>
     <h3>Edit Profile</h3>
         <form method="post" action="editphoto.php">
