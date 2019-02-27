@@ -15,6 +15,7 @@
 
 div.booth {
     width: 400px;
+    height: 40%:;
     background-color:green;
     border: 5px solid rgb(0, 0, 0);
     /* margin: 0 auto; */
@@ -86,18 +87,18 @@ div.booth {
                 <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>&nbsp;
             <?php endif ?>
         </ul>
-        <div class="booth">
+        <div >
     <video id="video" width="400" height="300" autoplay="true" ondrop="drop(event)"></video>
     <<canvas id="filters" width="400" height="300"></canvas> -->
 
     <div>
         <button onclick="myFunction()">Filters</button>
       <div>
-                <button  onclick="add_effect(0);"><img src="images/filters/alien.png"/></button>
-                <button  onclick="add_effect(1);"><img src="images/filters/bnb.png"/></button>
-                <button  onclick="add_effect(2);"><img src="images/filters/just_do_it.png"/></button>
-                <button  onclick="add_effect(3);"><img src="images/filters/pa.png"/></button>
-                <button  onclick="add_effect(4);"><img src="images/filters/sj.png"/></button>
+                <button  onclick="add_effect(0);"><img height = "50" src="images/filters/alien.png"/></button>
+                <button  onclick="add_effect(1);"><img height = "50" src="images/filters/bnb.png"/></button>
+                <button  onclick="add_effect(2);"><img height = "50" src="images/filters/just_do_it.png"/></button>
+                <button  onclick="add_effect(3);"><img height = "50" src="images/filters/pa.png"/></button>
+                <button  onclick="add_effect(4);"><img height = "50" src="images/filters/sj.png"/></button>
             </div>
     </div>
     <button id ="capture" onclick="snap();">Take Photo</button>
