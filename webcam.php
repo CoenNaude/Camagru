@@ -7,6 +7,7 @@
 
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <head lang="en">
     <title>Webcam</title>
         <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
@@ -74,22 +75,17 @@ div.booth {
 </style>
     </head>
     <body>
-        <ul>
-        <?php if(!isset($_SESSION['email'])): ?>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="gallery.php">Gallery</a></li>
-            <li><a href="profile.php">Profile</a></li>
-            <li><a href="login.php">Login</a></li>
-            <div><h1>Camagru</h1></div>
-            <?php else: ?>  
-            <li><a href="index.php">Home</a></li>
-            <li><a href="gallery.php">Gallery</a></li>
-            <li><a href="profile.php">Profile</a></li>
-            <li><a href="logout.php">Logout</a></li> 
-            <div><h1>Camagru</h1></div> 
+        <ul class="navbar-nav mr-auto">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="index.php">Camagru</a>
+                <li class="nav-item"><a class="nav-link" href="gallery.php">Gallery </a></li>&nbsp;
+                <li class="nav-item"><a class="nav-link" href="profile.php">Profile </a></li>&nbsp;
+            <?php if(!isset($_SESSION['email'])): ?>
+                <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>&nbsp;
+            <?php else: ?>
+                <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>&nbsp;
             <?php endif ?>
         </ul>
-
         <div class="booth">
     <video id="video" width="400" height="300" autoplay="true" ondrop="drop(event)"></video>
     <<canvas id="filters" width="400" height="300"></canvas> -->
@@ -132,10 +128,7 @@ window.onclick = function(event) {
   }
 }
 </script>
-         <script src="./js/camera.js"></script>
-
-         <div>
-            <p>Copyright &copy; cnaude - Wethinkcode_- <?php echo date('Y') ?></p>
-    </div>
+<script src="./js/camera.js"></script>
+        <?php include 'footer.php';?>
     </body>
 </html>

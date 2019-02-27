@@ -1,3 +1,6 @@
+
+
+
 <?php 
 include_once 'config/connection.php';
 include_once 'config/database.php';
@@ -30,19 +33,19 @@ session_start();
 
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 	<head lang="en">
 		<title>Gallery</title>
 
-		<ul>
+		<ul class="navbar-nav mr-auto">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+ 			<a class="navbar-brand" href="index.php">Camagru</a>
+				<li class="nav-item"><a class="nav-link" href="webcam.php">Webcam</a></li>&nbsp;
+				<li class="nav-item"><a class="nav-link" href="profile.php">Profile </a></li>&nbsp;
 			<?php if(!isset($_SESSION['email'])): ?>
-				<li><a href="index.php">Home</a></li>
-				<li><a href="webcam.php">Webcam</a></li>
-				<li><a href="profile.php">Profile</a></li>
-				<li><a href="login.php">Login</a></li>
+				<li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
 			<?php else: ?>
-				<li><a href="index.php">Home</a></li>
-				<li><a href="webcam.php">Webcam</a></li>
-				<li><a href="profile.php">Profile</a></li>
 				<li><a href="logout.php">Logout</a></li> 
 			<?php endif ?>
 		</ul>
@@ -109,7 +112,6 @@ session_start();
 			$x++; ?> 
 			</form> 
 			</div> <?php } ?>
-	</body>
 		<?php include 'footer.php';?>
 	</body>
 </html>

@@ -55,14 +55,15 @@ session_start();
 	?>
 
 <html>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<title>Profile</title>
 	<body>
-	<ul>
-		<div><h1>Camagru</h1></div>
-		<li><a href="index.php">Home</a></li>
-		<li><a href="gallery.php">Gallery</a></li>
-		<li><a href="webcam.php">Webcam</a></li>
-		<li><a href="logout.php">Logout</a></li>
+	<ul class="navbar-nav mr-auto">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+ 		<a class="navbar-brand" href="index.php">Camagru</a>
+			<li class="nav-item"><a class="nav-link" href="webcam.php">Webcam</a></li>&nbsp;
+			<li class="nav-item"><a class="nav-link" href="gallery.php">Gallery</a></li>&nbsp;
+			<li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>&nbsp;
 	</ul>
 	<h3>Edit Profile</h3>
 		<form method="post" action="editphoto.php">
@@ -85,7 +86,6 @@ session_start();
 					<button type="submit" name="save">Save</button>
 				</div>
 			</form>
-			<div><a href="index.php">&nbsp;Back to Login</a></div>
 		</div>
 	<?php
 	$user_id=$_SESSION['id'];
@@ -127,5 +127,6 @@ session_start();
 		</div> <?php
 	}
 ?>
+	<?php include 'footer.php';?>
 	</body>
 </html>
