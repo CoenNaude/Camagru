@@ -16,7 +16,7 @@
 	} else {
 		header ("location: gallery.php");
 	} 
-
+//subscription email and notifications
 	if((isset($_POST['update'])) && (!empty($_SESSION['username']))) {
 		$username=$_POST['username'];
 		$pass = hash('whirlpool',$_POST['pass']);
@@ -27,9 +27,9 @@
 		$edit = $conn->prepare("UPDATE users SET username = '$username', pass = '$pass', email = '$email', subscribed = '$subscribe' where id = '$user_id'");
 		$edit->execute();
 		var_dump($_POST);
-		//header ("location: gallery.php");
+		header ("location: gallery.php");
 	} else {
-	//	header ("location: gallery.php");
+		header ("location: gallery.php");
 	} 
 
 // delete photo
